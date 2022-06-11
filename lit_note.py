@@ -1,4 +1,4 @@
- ###################################### thêm g
+ ###################################### thêm giá và child shopify
 	if convert['children']:
 			for child in convert['children']:
 				child_id=to_str(self.get_map_field_by_src(self.TYPE_CHILD, child['id'], child['code']))
@@ -22,8 +22,7 @@
 				}
 			response = self.api('variants/' + to_str(variant_id) + '.json', var_post_data, 'Put')
 			response = json_decode(response)	
-	###################################################################################################################################3
- Create api shopify:
+################################### Create api shopify:
     function create_api(ver = 'new') {
         if (ver == 'new') {
             var checkBoxs = document.querySelectorAll('.Polaris-Checkbox__Input_30ock');
@@ -56,29 +55,23 @@
         }
     }
     create_api();
-############################################################################################################################################
-Xóa entity trên target và trên map shopify:
+#################### Xóa entity trên target và trên map shopify:
     order_id = self.get_map_field_by_src(self.TYPE_ORDER, convert['id'], convert['code'])
     self.api('orders/' + to_str(order_id) + '.json', api_type='Delete')
     self.delete_obj(TABLE_MAP, {'migration_id': self._migration_id, 'type': self.TYPE_ORDER, 'id_desc': order_id})
-#############################################################################################################3
-Thêm themes
-
+#################### Thêm themes
 	product_id = self.get_map_field_by_src(self.TYPE_PRODUCT, convert['id'], convert['code'])
-
 	if product_id:
-		# pass
-		# trieu upload file and add to metafield
+		# upload file and add to metafield
 		if "files" in convert and convert['files']:
-			theme_id = 132918018298		# trieu check theo store
-			# self.log(convert['files'],'__files')
+			theme_id = 132918018298		
 			for file in convert['files']:
 				file_code = self.get_map_field_by_src('pdf', file['id'], file['url'], field= 'code_desc')
 				if not file_code:
 					asset_put_file_data = {
 						"asset": {
 							"key": "assets/{}".format(file['handle']),
-							"theme_id": theme_id,	# trieu check theo store
+							"theme_id": theme_id,
 							"src": file['url']
 						}
 					}
@@ -121,7 +114,7 @@ Thêm themes
 						}
 						file_res = self.api("products/{}/metafields.json".format(product_id), meta_file_post_data, "POST")
 						self.log(file_res,'__file_res')
-
+###########################
 		# product_get = self.api(f"products/{product_id}.json", api_type= "GET")
 		# product_get = json_decode(product_get)
 		# new_tags = ''
